@@ -13,13 +13,12 @@
         android:id="@+id/imageView"
         android:layout_width="368dp"
         android:layout_height="328dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginEnd="286dp"
         android:layout_marginBottom="190dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.57"
         app:srcCompat="@drawable/asset_2" />
 
     <ImageButton
@@ -37,5 +36,58 @@
         app:srcCompat="@drawable/ic_baseline_settings_45"
         app:tint="#17C4FA"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/StartButton"
+        android:layout_width="477dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="100dp"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.566"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.733"
+        app:srcCompat="@drawable/etykieta" />
+
+    <ImageButton
+        android:id="@+id/ScoreButton"
+        android:layout_width="471dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="398dp"
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="411dp"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/etykieta" />
+
+    <TextView
+        android:id="@+id/textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START"
+        android:textColor="#F8F5F5"
+        android:textSize="80sp"
+        app:layout_constraintBottom_toBottomOf="@+id/StartButton"
+        app:layout_constraintEnd_toEndOf="@+id/StartButton"
+        app:layout_constraintStart_toStartOf="@+id/StartButton"
+        app:layout_constraintTop_toTopOf="@+id/StartButton" />
+
+    <TextView
+        android:id="@+id/textScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WYNIKI"
+        android:textColor="#FFFBFB"
+        android:textSize="70sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ScoreButton"
+        app:layout_constraintEnd_toEndOf="@+id/ScoreButton"
+        app:layout_constraintStart_toStartOf="@+id/ScoreButton"
+        app:layout_constraintTop_toTopOf="@+id/ScoreButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
