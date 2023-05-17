@@ -20,7 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.736"
-        app:srcCompat="@drawable/etykieta" />
+        app:srcCompat="@drawable/etykieta"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/EasyButton"
@@ -35,7 +36,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.736"
-        app:srcCompat="@drawable/etykieta" />
+        app:srcCompat="@drawable/etykieta"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -53,8 +55,8 @@
         android:id="@+id/SettingsButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1000dp"
         android:layout_marginTop="71dp"
-        android:layout_marginEnd="1000dp"
         android:layout_marginBottom="500dp"
         android:backgroundTint="#020202"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -35,7 +35,7 @@ public class StartActivity extends AppCompatActivity {
         EasyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadEasy = new Intent(StartActivity.this, EasyActivity.class);
+                Intent intentLoadEasy = new Intent(StartActivity.this, easy_mode.class);
                 startActivity(intentLoadEasy);
             }
         });
@@ -45,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
         HardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadHard = new Intent(StartActivity.this, HardActivity.class);
+                Intent intentLoadHard = new Intent(StartActivity.this, hard_mode.class);
                 startActivity(intentLoadHard);
             }
         });
