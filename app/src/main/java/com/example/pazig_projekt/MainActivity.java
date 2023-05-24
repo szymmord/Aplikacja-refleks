@@ -3,7 +3,6 @@ package com.example.pazig_projekt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SettingsButton = (ImageButton) findViewById(R.id.SettingsButton);
+        SettingsButton = (ImageButton) findViewById(R.id.SettingsButton4);
         StartButton = (ImageButton) findViewById(R.id.StartButton);
         ScoreButton = (ImageButton) findViewById(R.id.ScoreButton);
 

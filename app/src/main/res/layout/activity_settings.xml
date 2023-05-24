@@ -6,4 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <ImageButton
+        android:id="@+id/ExitMainSButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1000dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginBottom="500dp"
+        android:backgroundTint="#171819"
+        android:tint="#17C3F9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
