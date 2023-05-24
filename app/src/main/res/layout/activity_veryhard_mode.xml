@@ -17,13 +17,13 @@
         android:textColor="#F8F5F5"
         android:textSize="75sp"
         android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/StartButtonHard"
-        app:layout_constraintEnd_toEndOf="@+id/StartButtonHard"
-        app:layout_constraintStart_toStartOf="@+id/StartButtonHard"
-        app:layout_constraintTop_toTopOf="@+id/StartButtonHard" />
+        app:layout_constraintBottom_toBottomOf="@+id/StartButtonVeryHard"
+        app:layout_constraintEnd_toEndOf="@+id/StartButtonVeryHard"
+        app:layout_constraintStart_toStartOf="@+id/StartButtonVeryHard"
+        app:layout_constraintTop_toTopOf="@+id/StartButtonVeryHard" />
 
     <ImageButton
-        android:id="@+id/StartButtonHard"
+        android:id="@+id/StartButtonVeryHard"
         android:layout_width="471dp"
         android:layout_height="70dp"
         android:layout_marginEnd="100dp"

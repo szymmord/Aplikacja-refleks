@@ -14,7 +14,8 @@ public class StartActivity extends AppCompatActivity {
     ImageButton SettingsButton2;
     ImageButton EasyButton;
     ImageButton HardButton;
-
+    ImageButton ExitMainButton;
+    ImageButton UltraButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,15 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentLoadSettings = new Intent(StartActivity.this, SettingsActivity.class);
                 startActivity(intentLoadSettings);
+            }
+        });
+
+        ExitMainButton = (ImageButton) findViewById(R.id.ExitMainButton);
+        ExitMainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentLoadMain = new Intent(StartActivity.this, MainActivity.class);
+                startActivity(intentLoadMain);
             }
         });
 
@@ -50,5 +60,13 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+        UltraButton = (ImageButton) findViewById(R.id.UltraButton);
+        UltraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentLoadUltraHard = new Intent(StartActivity.this, veryhard_mode.class);
+                startActivity(intentLoadUltraHard);
+            }
+        });
     }
 }

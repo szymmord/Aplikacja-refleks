@@ -3,6 +3,7 @@ package com.example.pazig_projekt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.widget.Chronometer;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,12 +24,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class hard_mode extends AppCompatActivity {
+public class veryhard_mode extends AppCompatActivity {
 
     ImageButton ExitButton;
     private Chronometer chronometer;
 
-    ImageButton bNiebieski, bZolty, bCzerwony, bZielony, StartButtonHard;
+    ImageButton bNiebieski, bZolty, bCzerwony, bZielony, StartButtonVeryHard;
     ImageButton tNiebieski, tZielony, tZolty, tCzerwony, tCzarny;
     TextView textStart3;
     private long pauseOffset;
@@ -40,7 +41,7 @@ public class hard_mode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hard_mode);
+        setContentView(R.layout.activity_veryhard_mode);
         bNiebieski = (ImageButton) findViewById(R.id.bNiebieski);
         bCzerwony = (ImageButton) findViewById(R.id.bCzerwony);
         bZielony = (ImageButton) findViewById(R.id.bZielony);
@@ -50,10 +51,11 @@ public class hard_mode extends AppCompatActivity {
         tZielony = (ImageButton) findViewById(R.id.tCzerwony);
         tZolty = (ImageButton) findViewById(R.id.tNiebieski);
         tCzarny = (ImageButton) findViewById(R.id.tCzarny);
-        StartButtonHard = (ImageButton) findViewById(R.id.StartButtonHard);
+        StartButtonVeryHard = (ImageButton) findViewById(R.id.StartButtonVeryHard);
         ExitButton = (ImageButton) findViewById(R.id.ExitButton);
         textStart3 = (TextView) findViewById(R.id.textStart3) ;
         //wynik= (TextView) findViewById(R.id.Wynik);
+
 
 
         firestore = FirebaseFirestore.getInstance();
@@ -65,10 +67,12 @@ public class hard_mode extends AppCompatActivity {
         ExitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentLoadStart = new Intent(hard_mode.this, StartActivity.class);
+                Intent intentLoadStart = new Intent(veryhard_mode.this, StartActivity.class);
                 startActivity(intentLoadStart);
             }
         });
+
+
 
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -81,13 +85,16 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setText(time);
             }
         });
+
     }
 
 
     public void startChronometer(View v) {
         if (!running) {
+
             try {
                 Thread.sleep(1000); // Opoźnienie 1000 milisekund = 1 sekunda
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -97,10 +104,14 @@ public class hard_mode extends AppCompatActivity {
             tZielony.setVisibility(View.INVISIBLE);
             tCzarny.setVisibility(View.VISIBLE);
 
-            StartButtonHard.setVisibility(View.INVISIBLE);
+
+
+            StartButtonVeryHard.setVisibility(View.INVISIBLE);
             textStart3.setVisibility(View.INVISIBLE);
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+            mediaPlayer.start();
             running = true;
             Random random = new Random();
             int randomNumber = random.nextInt(4) + 1;
@@ -150,6 +161,8 @@ public class hard_mode extends AppCompatActivity {
     public void pauseChronometer(View v) {
         if (running) {
             chronometer.stop();
+            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+            mediaPlayer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
             long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
@@ -172,6 +185,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -205,10 +220,13 @@ public class hard_mode extends AppCompatActivity {
 
 
                 startChronometer(v);
+
             } else {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
             }
 
@@ -224,6 +242,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -262,6 +282,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
             }
 
@@ -277,6 +299,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -316,6 +340,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
             }
         }
@@ -330,6 +356,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -368,6 +396,8 @@ public class hard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
+                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+                mediaPlayer.stop();
                 running = false;
             }
 

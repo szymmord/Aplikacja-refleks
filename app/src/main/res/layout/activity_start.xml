@@ -8,6 +8,22 @@
     tools:context=".StartActivity">
 
     <ImageButton
+        android:id="@+id/UltraButton"
+        android:layout_width="471dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="300dp"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736"
+        app:srcCompat="@drawable/etykieta"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
         android:id="@+id/HardButton"
         android:layout_width="471dp"
         android:layout_height="70dp"
@@ -55,8 +71,8 @@
         android:id="@+id/SettingsButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1000dp"
         android:layout_marginTop="71dp"
+        android:layout_marginEnd="1000dp"
         android:layout_marginBottom="500dp"
         android:backgroundTint="#020202"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,4 +106,31 @@
         app:layout_constraintEnd_toEndOf="@+id/HardButton"
         app:layout_constraintStart_toStartOf="@+id/HardButton"
         app:layout_constraintTop_toTopOf="@+id/HardButton" />
+
+    <ImageButton
+        android:id="@+id/ExitMainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1000dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginBottom="500dp"
+        android:backgroundTint="#010101"
+        android:tint="#17C3F9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BARDZO TRUDNY"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/UltraButton"
+        app:layout_constraintEnd_toEndOf="@+id/UltraButton"
+        app:layout_constraintStart_toStartOf="@+id/UltraButton"
+        app:layout_constraintTop_toTopOf="@+id/UltraButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,121 @@
+{
+  "project_info": {
+    "project_number": "80339648729",
+    "project_id": "pazig-project-3a6f8",
+    "storage_bucket": "pazig-project-3a6f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80339648729:android:8ae4f30e61bf101b903ec8",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80339648729-1k4gla3bga2gja0v6k0ob2gn9r30973l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.application",
+            "certificate_hash": "30b2c6a983b518bd9ea1d1d8be92d1d43970b936"
+          }
+        },
+        {
+          "client_id": "80339648729-50s1a2d4vnbsbka1ubv1b06d8dekiv8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB88rUV1WA_6y35XngwhDow4T63-DT1qnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80339648729-50s1a2d4vnbsbka1ubv1b06d8dekiv8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80339648729:android:b0b8d06d0801657f903ec8",
+        "android_client_info": {
+          "package_name": "com.example.PAzIG_Projekt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80339648729-nafpin2v1s305ldbe0hqh6urn9aq4ffa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.PAzIG_Projekt",
+            "certificate_hash": "8c3b47e4b4b0c82ad255dbf1cb822fe7247acdc3"
+          }
+        },
+        {
+          "client_id": "80339648729-50s1a2d4vnbsbka1ubv1b06d8dekiv8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB88rUV1WA_6y35XngwhDow4T63-DT1qnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80339648729-50s1a2d4vnbsbka1ubv1b06d8dekiv8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80339648729:android:04f26dc27178a3ec903ec8",
+        "android_client_info": {
+          "package_name": "com.example.pazig_projekt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80339648729-lbcqhja06oksbiqaiagsldn7of2sc4ub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pazig_projekt",
+            "certificate_hash": "30b2c6a983b518bd9ea1d1d8be92d1d43970b936"
+          }
+        },
+        {
+          "client_id": "80339648729-50s1a2d4vnbsbka1ubv1b06d8dekiv8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB88rUV1WA_6y35XngwhDow4T63-DT1qnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80339648729-50s1a2d4vnbsbka1ubv1b06d8dekiv8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
