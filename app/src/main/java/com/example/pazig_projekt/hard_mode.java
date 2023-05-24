@@ -3,10 +3,12 @@ package com.example.pazig_projekt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.widget.Chronometer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.os.SystemClock;
 import android.widget.TextView;
@@ -29,13 +31,15 @@ public class hard_mode extends AppCompatActivity {
     private Chronometer chronometer;
 
     ImageButton bNiebieski, bZolty, bCzerwony, bZielony, StartButtonHard;
-    ImageButton tNiebieski, tZielony, tZolty, tCzerwony, tCzarny;
-    TextView textStart3;
+    ImageButton tNiebieski, tZielony, tZolty, tCzerwony, tCzarny, checkButton;
+    TextView textStart3, textImie;
     private long pauseOffset;
     private boolean running;
     int gowno;
     int jd = 1;
     FirebaseFirestore firestore;
+    String getName;
+    EditText editTextName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,9 @@ public class hard_mode extends AppCompatActivity {
         StartButtonHard = (ImageButton) findViewById(R.id.StartButtonHard);
         ExitButton = (ImageButton) findViewById(R.id.ExitButton);
         textStart3 = (TextView) findViewById(R.id.textStart3) ;
+        checkButton = (ImageButton) findViewById(R.id.checkButton);
+        textImie = (TextView) findViewById(R.id.textImie);
+        editTextName = (EditText) findViewById(R.id.editTextName);
         //wynik= (TextView) findViewById(R.id.Wynik);
 
 
@@ -67,6 +74,16 @@ public class hard_mode extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentLoadStart = new Intent(hard_mode.this, StartActivity.class);
                 startActivity(intentLoadStart);
+            }
+        });
+
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkButton.setVisibility(View.INVISIBLE);
+                editTextName.setVisibility(View.INVISIBLE);
+                textImie.setVisibility(View.INVISIBLE);
+                getName = editTextName.getText().toString();
             }
         });
 
@@ -182,7 +199,7 @@ public class hard_mode extends AppCompatActivity {
                 tCzarny.setVisibility(View.VISIBLE);
 
                 Map<String, Object> wyniki = new HashMap<>();
-                wyniki.put("firstName", "Test");
+                wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -235,7 +252,7 @@ public class hard_mode extends AppCompatActivity {
                 firestore = FirebaseFirestore.getInstance();
 
                 Map<String, Object> wyniki = new HashMap<>();
-                wyniki.put("firstName", "Test");
+                wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -288,7 +305,7 @@ public class hard_mode extends AppCompatActivity {
                 firestore = FirebaseFirestore.getInstance();
 
                 Map<String, Object> wyniki = new HashMap<>();
-                wyniki.put("firstName", "Test");
+                wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -341,7 +358,7 @@ public class hard_mode extends AppCompatActivity {
                 firestore = FirebaseFirestore.getInstance();
 
                 Map<String, Object> wyniki = new HashMap<>();
-                wyniki.put("firstName", "Test");
+                wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
