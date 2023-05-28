@@ -3,6 +3,8 @@ package com.example.pazig_projekt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.widget.Chronometer;
 import android.content.Intent;
@@ -14,12 +16,18 @@ import android.os.SystemClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -30,42 +38,68 @@ public class veryhard_mode extends AppCompatActivity {
     ImageButton ExitButton;
     private Chronometer chronometer;
 
-    ImageButton bNiebieski, bZolty, bCzerwony, bZielony, StartButtonVeryHard;
-    ImageButton tNiebieski, tZielony, tZolty, tCzerwony, tCzarny, checkButton;
-    TextView textStart3, textImie;
+    ImageButton bNiebieski, bZolty, bCzerwony, bZielony, StartButtonEasy, checkButton;
+    ImageButton tNiebieski, tZielony, tZolty, tCzerwony, tCzarny;
+    TextView textStart3, textImie, text1,text2 ,text3,text4,podsumowanie,tMean,tMin,tMax;
     private long pauseOffset;
     private boolean running;
     int gowno;
     int jd = 1;
-    FirebaseFirestore firestore;
-    String getName;
+    FirebaseFirestore firestore,firestore2;
     EditText editTextName;
+    String getName;
+    long maxValue, sum ;
+    long meanValue;
+    long minValue=100000;
+    LineChart lineChart;
+    List<Entry> entries = new ArrayList<>();
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_veryhard_mode);
-        bNiebieski = (ImageButton) findViewById(R.id.bNiebieski);
-        bCzerwony = (ImageButton) findViewById(R.id.bCzerwony);
-        bZielony = (ImageButton) findViewById(R.id.bZielony);
-        bZolty = (ImageButton) findViewById(R.id.bZolty);
-        tNiebieski = (ImageButton) findViewById(R.id.tZielony);
-        tCzerwony = (ImageButton) findViewById(R.id.tZolty);
-        tZielony = (ImageButton) findViewById(R.id.tCzerwony);
-        tZolty = (ImageButton) findViewById(R.id.tNiebieski);
+        bNiebieski = (ImageButton) findViewById(R.id.bZielony);
+        bCzerwony = (ImageButton) findViewById(R.id.bZolty);
+        bZielony = (ImageButton) findViewById(R.id.bCzerwony);
+        bZolty = (ImageButton) findViewById(R.id.bNiebieski);
+        tNiebieski = (ImageButton) findViewById(R.id.tNiebieski);
+        tCzerwony = (ImageButton) findViewById(R.id.tCzerwony);
+        tZielony = (ImageButton) findViewById(R.id.tZielony);
+        tZolty = (ImageButton) findViewById(R.id.tZolty);
         tCzarny = (ImageButton) findViewById(R.id.tCzarny);
-        StartButtonVeryHard = (ImageButton) findViewById(R.id.StartButtonVeryHard);
+        StartButtonEasy = (ImageButton) findViewById(R.id.StartButtonVeryHard);
         ExitButton = (ImageButton) findViewById(R.id.ExitButton);
         textStart3 = (TextView) findViewById(R.id.textStart3) ;
+        editTextName = (EditText) findViewById(R.id.editTextName);
         checkButton = (ImageButton) findViewById(R.id.checkButton);
         textImie = (TextView) findViewById(R.id.textImie);
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        //wynik= (TextView) findViewById(R.id.Wynik);
+
+
+
+        tMean=findViewById(R.id.tMean);
+        tMin=findViewById(R.id.tMin);
+        tMax=findViewById(R.id.tMax);
+        podsumowanie = findViewById(R.id.podusmowanie);
+        text1=findViewById(R.id.textView3);
+        text2=findViewById(R.id.textView4);
+        text3=findViewById(R.id.textView7);
+        text4=findViewById(R.id.textView8);
+        lineChart = findViewById(R.id.lineChart);
+        lineChart.setVisibility(View.INVISIBLE);
+        podsumowanie.setVisibility(View.INVISIBLE);
+        tMin.setVisibility(View.INVISIBLE);
+        tMax.setVisibility(View.INVISIBLE);
+        tMean.setVisibility(View.INVISIBLE);
+
+
 
 
 
         firestore = FirebaseFirestore.getInstance();
-
+        firestore2 = FirebaseFirestore.getInstance();
+        mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+        mediaPlayer.start();
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
@@ -75,7 +109,6 @@ public class veryhard_mode extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentLoadStart = new Intent(veryhard_mode.this, StartActivity.class);
                 startActivity(intentLoadStart);
-
             }
         });
 
@@ -100,16 +133,13 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setText(time);
             }
         });
-
     }
 
 
     public void startChronometer(View v) {
         if (!running) {
-
             try {
                 Thread.sleep(1000); // Opoźnienie 1000 milisekund = 1 sekunda
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -119,13 +149,10 @@ public class veryhard_mode extends AppCompatActivity {
             tZielony.setVisibility(View.INVISIBLE);
             tCzarny.setVisibility(View.VISIBLE);
 
-
-
-            StartButtonVeryHard.setVisibility(View.INVISIBLE);
+            StartButtonEasy.setVisibility(View.INVISIBLE);
             textStart3.setVisibility(View.INVISIBLE);
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
-            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
             mediaPlayer.start();
             running = true;
             Random random = new Random();
@@ -176,8 +203,6 @@ public class veryhard_mode extends AppCompatActivity {
     public void pauseChronometer(View v) {
         if (running) {
             chronometer.stop();
-            final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-            mediaPlayer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
             long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
@@ -200,8 +225,6 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -210,6 +233,12 @@ public class veryhard_mode extends AppCompatActivity {
                 tCzerwony.setVisibility(View.INVISIBLE);
                 tZielony.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.VISIBLE);
+                firestore = FirebaseFirestore.getInstance();
+
+
+                entries.add(new Entry(jd, elapsedMillis));
+
+
 
                 Map<String, Object> wyniki = new HashMap<>();
                 wyniki.put("firstName", getName);
@@ -227,6 +256,16 @@ public class veryhard_mode extends AppCompatActivity {
 
                     }
                 });
+                sum = elapsedMillis + sum;
+
+                if(elapsedMillis>maxValue)
+                {
+                    maxValue=elapsedMillis;
+                }
+                if(elapsedMillis < minValue)
+                {
+                    minValue=elapsedMillis;
+                }
                 try {
                     Thread.sleep(1000); // Opoźnienie 1000 milisekund = 1 sekunda
                 } catch (InterruptedException e) {
@@ -235,14 +274,37 @@ public class veryhard_mode extends AppCompatActivity {
 
 
                 startChronometer(v);
-
             } else {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
+
+                meanValue=sum/10;
+
+                stworzWykres(v);
+
+
+
+                firestore2 = FirebaseFirestore.getInstance();
+                Map<String, Object> summary = new HashMap<>();
+                summary.put("firstName", getName);
+                summary.put("level", "3");
+                summary.put("minValue", minValue);
+                summary.put("maxValue", maxValue);
+                summary.put("meanValue", meanValue);
+                firestore2.collection("summary").add(summary).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_LONG).show();
+
+                    }
+                });
             }
 
         }
@@ -257,8 +319,6 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -268,6 +328,11 @@ public class veryhard_mode extends AppCompatActivity {
                 tZielony.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.VISIBLE);
                 firestore = FirebaseFirestore.getInstance();
+
+
+                entries.add(new Entry(jd, elapsedMillis));
+
+
 
                 Map<String, Object> wyniki = new HashMap<>();
                 wyniki.put("firstName", getName);
@@ -285,6 +350,17 @@ public class veryhard_mode extends AppCompatActivity {
 
                     }
                 });
+
+                sum = elapsedMillis + sum;
+                if(elapsedMillis>maxValue)
+                {
+                    maxValue=elapsedMillis;
+                }
+                if(elapsedMillis < minValue)
+                {
+                    minValue=elapsedMillis;
+                }
+
                 try {
                     Thread.sleep(1000); // Opoźnienie 1000 milisekund = 1 sekunda
                 } catch (InterruptedException e) {
@@ -297,9 +373,31 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
+                meanValue=sum/10;
+                firestore2 = FirebaseFirestore.getInstance();
+
+                stworzWykres(v);
+
+
+                Map<String, Object> summary = new HashMap<>();
+                summary.put("firstName", getName);
+                summary.put("level", "3");
+                summary.put("minValue", minValue);
+                summary.put("maxValue", maxValue);
+                summary.put("meanValue", meanValue);
+                firestore2.collection("summary").add(summary).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_LONG).show();
+
+                    }
+                });
             }
 
         }
@@ -314,8 +412,6 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -325,6 +421,13 @@ public class veryhard_mode extends AppCompatActivity {
                 tZielony.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.VISIBLE);
                 firestore = FirebaseFirestore.getInstance();
+
+
+
+                entries.add(new Entry(jd, elapsedMillis));
+
+
+
 
                 Map<String, Object> wyniki = new HashMap<>();
                 wyniki.put("firstName", getName);
@@ -342,6 +445,17 @@ public class veryhard_mode extends AppCompatActivity {
 
                     }
                 });
+                sum = elapsedMillis + sum;
+
+                if(elapsedMillis>maxValue)
+                {
+                    maxValue=elapsedMillis;
+                }
+                if(elapsedMillis < minValue)
+                {
+                    minValue=elapsedMillis;
+                }
+
                 try {
                     Thread.sleep(1000); // Opoźnienie 1000 milisekund = 1 sekunda
                 } catch (InterruptedException e) {
@@ -355,9 +469,33 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
+
+
+
+
+
+                meanValue=sum/10;
+                stworzWykres(v);
+                firestore2 = FirebaseFirestore.getInstance();
+                Map<String, Object> summary = new HashMap<>();
+                summary.put("firstName", getName);
+                summary.put("level", "3");
+                summary.put("minValue", minValue);
+                summary.put("maxValue", maxValue);
+                summary.put("meanValue", meanValue);
+                firestore2.collection("summary").add(summary).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_LONG).show();
+
+                    }
+                });
             }
         }
     }
@@ -371,8 +509,6 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
                 gowno = 0;
                 jd = jd + 1;
@@ -382,6 +518,14 @@ public class veryhard_mode extends AppCompatActivity {
                 tZielony.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.VISIBLE);
                 firestore = FirebaseFirestore.getInstance();
+
+
+
+                entries.add(new Entry(jd, elapsedMillis));
+
+
+
+
 
                 Map<String, Object> wyniki = new HashMap<>();
                 wyniki.put("firstName", getName);
@@ -399,6 +543,17 @@ public class veryhard_mode extends AppCompatActivity {
 
                     }
                 });
+                sum = elapsedMillis + sum;
+
+                if(elapsedMillis>maxValue)
+                {
+                    maxValue=elapsedMillis;
+                }
+                if(elapsedMillis < minValue)
+                {
+                    minValue=elapsedMillis;
+                }
+
                 try {
                     Thread.sleep(1000); // Opoźnienie 1000 milisekund = 1 sekunda
                 } catch (InterruptedException e) {
@@ -411,11 +566,76 @@ public class veryhard_mode extends AppCompatActivity {
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 pauseOffset = 0;
                 chronometer.stop();
-                final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
-                mediaPlayer.stop();
                 running = false;
+
+
+
+
+                meanValue=sum/10;
+                stworzWykres(v);
+                firestore2 = FirebaseFirestore.getInstance();
+                Map<String, Object> summary = new HashMap<>();
+                summary.put("firstName", getName);
+                summary.put("level", "3");
+                summary.put("minValue", minValue);
+                summary.put("maxValue", maxValue);
+                summary.put("meanValue", meanValue);
+                firestore2.collection("summary").add(summary).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_LONG).show();
+
+                    }
+                });
             }
 
         }
     }
+    public void stworzWykres(View v)
+    {
+        //final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.sound);
+        mediaPlayer.stop();
+        tNiebieski.setVisibility(View.INVISIBLE);
+        tZolty.setVisibility(View.INVISIBLE);
+        tCzerwony.setVisibility(View.INVISIBLE);
+        tZielony.setVisibility(View.INVISIBLE);
+        tCzarny.setVisibility(View.INVISIBLE);
+        bNiebieski.setVisibility(View.INVISIBLE);
+        bZolty.setVisibility(View.INVISIBLE);
+        bCzerwony.setVisibility(View.INVISIBLE);
+        bZielony.setVisibility(View.INVISIBLE);
+        text1.setVisibility(View.INVISIBLE);
+        text2.setVisibility(View.INVISIBLE);
+        text3.setVisibility(View.INVISIBLE);
+        text4.setVisibility(View.INVISIBLE);
+        chronometer.setVisibility(View.INVISIBLE);
+
+        podsumowanie.setVisibility(View.VISIBLE);
+        lineChart.setVisibility(View.VISIBLE);
+        tMin.setVisibility(View.VISIBLE);
+        tMax.setVisibility(View.VISIBLE);
+        tMean.setVisibility(View.VISIBLE);
+        String srednia = "Srednia: " + meanValue+"ms";
+        String min = "Najlepszy wynik: " + minValue+"ms";
+        String max = "Najgorszy wynik: " + maxValue+"ms";
+
+        tMean.setText(srednia);
+        tMin.setText(min);
+        tMax.setText(max);
+
+        LineDataSet dataSet = new LineDataSet(entries, "Wykres liniowy");
+        dataSet.setColor(Color.BLUE);
+        dataSet.setValueTextColor(Color.RED);
+
+        LineData lineData = new LineData(dataSet);
+
+        lineChart.setData(lineData);
+        lineChart.invalidate(); // Odświeżenie wykresu
+    }
+
 }
