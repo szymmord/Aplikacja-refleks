@@ -43,7 +43,7 @@ public class veryhard_mode extends AppCompatActivity {
     TextView textStart3, textImie, text1,text2 ,text3,text4,podsumowanie,tMean,tMin,tMax;
     private long pauseOffset;
     private boolean running;
-    int gowno;
+    int wylosowana;
     int jd = 1;
     FirebaseFirestore firestore,firestore2;
     EditText editTextName;
@@ -166,7 +166,7 @@ public class veryhard_mode extends AppCompatActivity {
                 tCzerwony.setVisibility(View.INVISIBLE);
                 tZielony.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.INVISIBLE);
-                gowno = randomNumber;
+                wylosowana = randomNumber;
             }
             if (randomNumber == 2) {
 
@@ -175,7 +175,7 @@ public class veryhard_mode extends AppCompatActivity {
                 tZolty.setVisibility(View.INVISIBLE);
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.INVISIBLE);
-                gowno = randomNumber;
+                wylosowana= randomNumber;
             }
             if (randomNumber == 3) {
 
@@ -184,7 +184,7 @@ public class veryhard_mode extends AppCompatActivity {
                 tCzerwony.setVisibility(View.INVISIBLE);
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.INVISIBLE);
-                gowno = randomNumber;
+                wylosowana = randomNumber;
             }
             if (randomNumber == 4) {
 
@@ -193,7 +193,7 @@ public class veryhard_mode extends AppCompatActivity {
                 tCzerwony.setVisibility(View.INVISIBLE);
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tCzarny.setVisibility(View.INVISIBLE);
-                gowno = randomNumber;
+                wylosowana = randomNumber;
             }
 
 
@@ -217,7 +217,7 @@ public class veryhard_mode extends AppCompatActivity {
     }
 
     public void kolorCzerwony(View v) {
-        if (gowno == 2) {
+        if (wylosowana == 2) {
             if (jd < 10) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
                 //wynik.setVisibility(View.VISIBLE);
@@ -226,7 +226,7 @@ public class veryhard_mode extends AppCompatActivity {
                 pauseOffset = 0;
                 chronometer.stop();
                 running = false;
-                gowno = 0;
+                wylosowana= 0;
                 jd = jd + 1;
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tZolty.setVisibility(View.INVISIBLE);
@@ -244,6 +244,7 @@ public class veryhard_mode extends AppCompatActivity {
                 wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
+                wyniki.put("level", "3");
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -311,7 +312,7 @@ public class veryhard_mode extends AppCompatActivity {
     }
 
     public void kolorZielony(View v) {
-        if (gowno == 3) {
+        if (wylosowana == 3) {
             if (jd < 10) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
                 // wynik.setVisibility(View.VISIBLE);
@@ -320,7 +321,7 @@ public class veryhard_mode extends AppCompatActivity {
                 pauseOffset = 0;
                 chronometer.stop();
                 running = false;
-                gowno = 0;
+                wylosowana = 0;
                 jd = jd + 1;
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tZolty.setVisibility(View.INVISIBLE);
@@ -338,6 +339,7 @@ public class veryhard_mode extends AppCompatActivity {
                 wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
+                wyniki.put("level", "3");
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -404,7 +406,7 @@ public class veryhard_mode extends AppCompatActivity {
     }
 
     public void kolorNiebieski(View v) {
-        if (gowno == 1) {
+        if (wylosowana == 1) {
             if (jd < 10) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
                 // wynik.setVisibility(View.VISIBLE);
@@ -413,7 +415,7 @@ public class veryhard_mode extends AppCompatActivity {
                 pauseOffset = 0;
                 chronometer.stop();
                 running = false;
-                gowno = 0;
+                wylosowana = 0;
                 jd = jd + 1;
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tZolty.setVisibility(View.INVISIBLE);
@@ -433,6 +435,7 @@ public class veryhard_mode extends AppCompatActivity {
                 wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
+                wyniki.put("level", "3");
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -501,7 +504,7 @@ public class veryhard_mode extends AppCompatActivity {
     }
 
     public void kolorZolty(View v) {
-        if (gowno == 4) {
+        if (wylosowana == 4) {
             if (jd < 10) {
                 long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
                 //wynik.setVisibility(View.VISIBLE);
@@ -510,7 +513,7 @@ public class veryhard_mode extends AppCompatActivity {
                 pauseOffset = 0;
                 chronometer.stop();
                 running = false;
-                gowno = 0;
+                wylosowana = 0;
                 jd = jd + 1;
                 tNiebieski.setVisibility(View.INVISIBLE);
                 tZolty.setVisibility(View.INVISIBLE);
@@ -531,6 +534,7 @@ public class veryhard_mode extends AppCompatActivity {
                 wyniki.put("firstName", getName);
                 wyniki.put("pomiar", jd);
                 wyniki.put("wynik", elapsedMillis);
+                wyniki.put("level", "3");
                 firestore.collection("wyniki").add(wyniki).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

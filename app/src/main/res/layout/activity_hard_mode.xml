@@ -270,6 +270,7 @@
         app:layout_constraintStart_toEndOf="@+id/editTextName"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_check_60" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="586dp"
