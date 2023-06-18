@@ -38,8 +38,8 @@
         app:tint="#17C4FA"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+    <com.github.mikephil.charting.charts.ScatterChart
+        android:id="@+id/scatterChart"
         android:layout_width="723dp"
         android:layout_height="598dp"
         android:background="@color/white"

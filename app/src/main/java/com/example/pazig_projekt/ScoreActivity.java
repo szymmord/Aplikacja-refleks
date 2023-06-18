@@ -15,9 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,7 +31,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     ImageButton ExitStartButton;
     ImageButton SettingsButton;
-    private LineChart lineChart;
+    private ScatterChart scatterChart;
     ImageButton checkName;
     EditText name;
     TextView tMean,tMin,tMax;
@@ -46,7 +49,7 @@ public class ScoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_score);
 
 
-        lineChart = findViewById(R.id.lineChart);
+        scatterChart = findViewById(R.id.scatterChart);
         checkName=findViewById(R.id.checkButton);
         name= findViewById(R.id.editTextName);
         tMean=findViewById(R.id.tMean);
@@ -76,7 +79,7 @@ public class ScoreActivity extends AppCompatActivity {
                 name.setVisibility(View.INVISIBLE);
 
                 getName = name.getText().toString();
-                lineChart.setVisibility(View.VISIBLE);
+                scatterChart.setVisibility(View.VISIBLE);
                 tMax.setVisibility(View.VISIBLE);
                 tMin.setVisibility(View.VISIBLE);
                 tMean.setVisibility(View.VISIBLE);
@@ -104,8 +107,7 @@ public class ScoreActivity extends AppCompatActivity {
     }
 
 
-    public void PobierzDane(View v)
-    {
+    public void PobierzDane(View v) {
 
         firestore.collection("wyniki")
                 .whereEqualTo("firstName", getName)
@@ -113,27 +115,23 @@ public class ScoreActivity extends AppCompatActivity {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<DocumentSnapshot> documentList = queryDocumentSnapshots.getDocuments();
 
-
-                    for (DocumentSnapshot document : documentList) {
-                        Object value = document.get("wynik");
-                        valueList.add(value);
-                    }
                     List<Entry> entries = new ArrayList<>();
-                    for (int i = 0; i < valueList.size(); i++) {
-                        float value = Float.parseFloat(valueList.get(i).toString());
-                        entries.add(new Entry(i, value));
+                    for (int i = 0; i < documentList.size(); i++) {
+                        DocumentSnapshot document = documentList.get(i);
+                        Object value = document.get("wynik");
+                        float floatValue = Float.parseFloat(value.toString());
+                        entries.add(new Entry(i, floatValue));
                     }
 
-// Utwórz zestaw danych dla wykresu
-                    LineDataSet dataSet = new LineDataSet(entries, "Wykres");
+                    ScatterDataSet dataSet = new ScatterDataSet(entries, "Wykres");
                     dataSet.setColor(Color.BLUE);
-                    dataSet.setValueTextColor(Color.RED);
+                    dataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE); // Ustawienie kształtu punktów
+                    dataSet.setScatterShapeSize(10f); // Ustawienie rozmiaru punktów
 
-                    LineData lineData = new LineData(dataSet);
+                    ScatterData scatterData = new ScatterData(dataSet);
 
-// Konfiguruj wykres
-                    lineChart.setData(lineData);
-                    lineChart.invalidate();
+                    scatterChart.setData(scatterData);
+                    scatterChart.invalidate();
 
                     // Obsłuż pobrane wartości "wynik" tutaj
                     // valueList zawiera pobrane wartości pola "wynik" dla dokumentów pasujących do zapytania
@@ -141,7 +139,6 @@ public class ScoreActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // Obsłuż błąd tutaj
                 });
-
     }
     public void PobierzDane2(View v)
     {

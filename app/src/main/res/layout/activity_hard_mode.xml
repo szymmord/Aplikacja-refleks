@@ -271,8 +271,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_check_60" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+    <com.github.mikephil.charting.charts.ScatterChart
+        android:id="@+id/scatterChart"
         android:layout_width="586dp"
         android:layout_height="544dp"
         android:background="@color/white"

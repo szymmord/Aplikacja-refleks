@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.media.Image;
+import android.text.TextUtils;
 import android.widget.Chronometer;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,7 +54,7 @@ public class hard_mode extends AppCompatActivity {
     long maxValue, sum ;
     long meanValue;
     long minValue=10000;
-    LineChart lineChart;
+   private ScatterChart scatterChart;
     List<Entry> entries = new ArrayList<>();
 
     @Override
@@ -83,8 +87,8 @@ public class hard_mode extends AppCompatActivity {
         text2=findViewById(R.id.textView4);
         text3=findViewById(R.id.textView7);
         text4=findViewById(R.id.textView8);
-        lineChart = findViewById(R.id.lineChart);
-        lineChart.setVisibility(View.INVISIBLE);
+        scatterChart = findViewById(R.id.scatterChart);
+        scatterChart.setVisibility(View.INVISIBLE);
         podsumowanie.setVisibility(View.INVISIBLE);
         tMin.setVisibility(View.INVISIBLE);
         tMax.setVisibility(View.INVISIBLE);
@@ -112,10 +116,18 @@ public class hard_mode extends AppCompatActivity {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkButton.setVisibility(View.INVISIBLE);
-                editTextName.setVisibility(View.INVISIBLE);
-                textImie.setVisibility(View.INVISIBLE);
-                getName = editTextName.getText().toString();
+
+                if (TextUtils.isEmpty(editTextName.getText())) {
+                    Toast.makeText(getApplicationContext(), "Wprowadź wartość w pole", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+
+                    getName = editTextName.getText().toString();
+                    checkButton.setVisibility(View.INVISIBLE);
+                    editTextName.setVisibility(View.INVISIBLE);
+                    textImie.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -594,8 +606,7 @@ public class hard_mode extends AppCompatActivity {
 
         }
     }
-    public void stworzWykres(View v)
-    {
+    public void stworzWykres(View v) {
         tNiebieski.setVisibility(View.INVISIBLE);
         tZolty.setVisibility(View.INVISIBLE);
         tCzerwony.setVisibility(View.INVISIBLE);
@@ -612,26 +623,27 @@ public class hard_mode extends AppCompatActivity {
         chronometer.setVisibility(View.INVISIBLE);
 
         podsumowanie.setVisibility(View.VISIBLE);
-        lineChart.setVisibility(View.VISIBLE);
+        scatterChart.setVisibility(View.VISIBLE);
         tMin.setVisibility(View.VISIBLE);
         tMax.setVisibility(View.VISIBLE);
         tMean.setVisibility(View.VISIBLE);
-        String srednia = "Srednia: " + meanValue+"ms";
-        String min = "Najlepszy wynik: " + minValue+"ms";
-        String max = "Najgorszy wynik: " + maxValue+"ms";
+        String srednia = "Srednia: " + meanValue + "ms";
+        String min = "Najlepszy wynik: " + minValue + "ms";
+        String max = "Najgorszy wynik: " + maxValue + "ms";
 
         tMean.setText(srednia);
         tMin.setText(min);
         tMax.setText(max);
 
-        LineDataSet dataSet = new LineDataSet(entries, "Wykres liniowy");
+        ScatterDataSet dataSet = new ScatterDataSet(entries, "Wykres punktowy");
         dataSet.setColor(Color.BLUE);
-        dataSet.setValueTextColor(Color.RED);
+        dataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+        dataSet.setScatterShapeSize(8f);
 
-        LineData lineData = new LineData(dataSet);
+        ScatterData scatterData = new ScatterData(dataSet);
 
-        lineChart.setData(lineData);
-        lineChart.invalidate(); // Odświeżenie wykresu
+        scatterChart.setData(scatterData);
+        scatterChart.invalidate();
     }
 
 }
